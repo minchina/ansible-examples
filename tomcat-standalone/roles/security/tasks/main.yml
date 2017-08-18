@@ -7,5 +7,8 @@
   get_url: 
      url: http://192.168.21.23:8081/view/security-ci/job/cn.sisyphe/job/security_build/ws/target/cn.sisyphe.security-1.0-SNAPSHOT-exec.jar
      dest: /home/xxfdeploy
-- name: Run comand to stop the screen
+- name: kill the process
   command: sh /home/xxfdeploy/test.sh
+- name: wait 10 seconds
+  pause:
+    seconds: 10
