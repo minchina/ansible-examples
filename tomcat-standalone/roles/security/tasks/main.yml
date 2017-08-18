@@ -1,0 +1,9 @@
+---
+- name: remove the target file
+  file:
+    state: absent
+    path: /home/project/cn.sisyphe.security-1.0-SNAPSHOT-exec.jar
+- name: Download security jar file
+  get_url: 
+     url: http://192.168.21.23:8081/view/security-ci/job/cn.sisyphe/job/security_build/ws/target/cn.sisyphe.security-1.0-SNAPSHOT-exec.jar
+     dest: /home/project
