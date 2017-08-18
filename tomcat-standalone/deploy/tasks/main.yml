@@ -1,0 +1,24 @@
+---
+- name: remove the target file
+  file:
+    state: absent
+    path: {{ jar_path }}
+
+- name: Download security jar file
+  get_url: 
+     url: {{ jar_url }}
+     dest: /home/xxfdeploy
+
+# - name: kill the process
+#   command: python /home/project/{{ script_name }} stop
+
+# - name: wait 10 seconds
+#   pause:
+#     seconds: 10
+
+# - name: start server again
+#   command: python /home/project/{{ script_name }} start
+
+# - name: wait for server to start
+#   wait_for: port={{ server_port }}
+
