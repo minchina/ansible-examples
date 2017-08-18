@@ -2,11 +2,11 @@
 - name: remove the target file
   file:
     state: absent
-    path: {{ jar_path }}
+    path: "{{ jar_path }}"
 
 - name: Download security jar file
   get_url: 
-     url: {{ jar_url }}
+     url: "{{ jar_url }}"
      dest: /home/xxfdeploy
 
 # - name: kill the process
