@@ -1,0 +1,13 @@
+---
+# This playbook deploys a simple standalone Tomcat 7 server.
+
+- hosts: tomcat-servers
+  remote_user: root
+  vars:
+    jar_path: /home/project/cn.sisyphe.security-1.0-SNAPSHOT-exec.jar
+    jar_url: http://192.168.21.23:8081/job/cn.sisyphe/job/security_build/ws/target/cn.sisyphe.security-1.0-SNAPSHOT-exec.jar
+    script_name: start_security_services.py
+    server_port: 17001
+
+  roles:
+    - deploy
