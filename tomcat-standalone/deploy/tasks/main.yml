@@ -9,11 +9,11 @@
      url: "{{ jar_url }}"
      dest: /home/project
 
-- name: go to /home/project
-  command: chdir=/home/project
 
 - name: kill the process
   command: python "{{ script_name }}" stop
+  args:
+    chdir: /home/project/
 
 - name: wait 20 seconds
   pause:
@@ -21,6 +21,8 @@
 
 - name: start server again
   command: python "{{ script_name }}" start
+  args:
+    chdir: /home/project/
 
 - name: wait for server to start
   wait_for: port="{{ server_port }}"
