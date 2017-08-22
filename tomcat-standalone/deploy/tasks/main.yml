@@ -4,16 +4,15 @@
     state: absent
     path: "{{ jar_path }}"
 
-- name: Download security jar file
-  get_url: 
-     url: "{{ jar_url }}"
-     dest: /home/project
-
-
 - name: kill the process
   command: python "{{ script_name }}" stop
   args:
     chdir: /home/project/
+
+- name: Download security jar file
+  get_url:
+     url: "{{ jar_url }}"
+     dest: /home/project
 
 - name: wait 20 seconds
   pause:
