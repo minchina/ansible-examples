@@ -1,0 +1,12 @@
+---
+
+- hosts: tomcat-servers
+  remote_user: root
+  vars:
+    jar_path: /home/project/oauth-client-1.0-SNAPSHOT-exec.jar
+    jar_url: http://192.168.21.23:8081/job/cn.sisyphe/job/oauth_build/ws/oauth-client/target/oauth-client-1.0-SNAPSHOT-exec.jar
+    script_name: start_oauth_services.py
+    server_port: 16001
+
+  roles:
+    - deploy
