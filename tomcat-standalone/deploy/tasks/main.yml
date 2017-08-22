@@ -12,9 +12,9 @@
 - name: kill the process
   command: python /home/project/"{{ script_name }}" stop
 
-- name: wait 10 seconds
+- name: wait 20 seconds
   pause:
-    seconds: 10
+    seconds: 20
 
 - name: start server again
   command: python /home/project/"{{ script_name }}" start
