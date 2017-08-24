@@ -1,27 +1,43 @@
 ---
-- name: remove the target file
+
+- name: 停止服务
+  service:
+    name: "{{ jar_name }}"
+    state: stoped
+
+- name: 等待服务停止
+  wait_for:
+    host: 0.0.0.0
+    port: "{{ server_port }}"
+    delay: 10
+    state: drained
+
+- name: 删除符号链接
+  file:
+    path: "/etc/init.d/{{ jar_name }}"
+    state: absent
+
+- name: 删除上一次build的Jar包
   file:
     state: absent
-    path: "{{ jar_path }}"
+    path: "{{ path }}{{ jar_name }}"
 
-- name: kill the process
-  command: python "{{ script_name }}" stop
-  args:
-    chdir: /home/project/
-
-- name: Download security jar file
+- name: 下载最新的JAR包
   get_url:
      url: "{{ jar_url }}"
-     dest: /home/project
+     dest: "{{ path }}"
 
-- name: wait 20 seconds
-  pause:
-    seconds: 20
-
-- name: start server again
-  command: python "{{ script_name }}" start
-  args:
-    chdir: /home/project/
+- name: 重新创建新的连接
+  file:
+    src: "{{ path }}{{ jar_name }}"
+    dest: "/etc/init.d/{{ jar_name }}"
+    owner: foo
+    group: foo
+    state: link
+- name: 重新启动服务
+  service:
+    name: "{{ jar_name }}"
+    state: started
 
 - name: wait for server to start
   wait_for: port="{{ server_port }}"
