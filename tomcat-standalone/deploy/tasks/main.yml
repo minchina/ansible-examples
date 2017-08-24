@@ -26,13 +26,14 @@
   get_url:
      url: "{{ jar_url }}"
      dest: "{{ path }}"
+     mode: 0755
 
 - name: 重新创建新的连接
   file:
     src: "{{ path }}{{ jar_name }}"
     dest: "/etc/init.d/{{ jar_name }}"
-    owner: foo
-    group: foo
+    owner: root
+    group: root
     state: link
 - name: 重新启动服务
   service:
