@@ -6,6 +6,8 @@
   changed_when: false
   register: application_status
 
+- debug: var=application_status.stdout
+
 - name: 停止服务
   service:
     name: "{{ jar_name }}"
