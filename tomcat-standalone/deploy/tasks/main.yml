@@ -1,14 +1,13 @@
 ---
-
 - name: 停止服务
   command: service "{{ jar_name }}" stop
 
- - name: 等待服务停止
-   wait_for:
-     host: 0.0.0.0
-     port: "{{ server_port }}"
-     delay: 10
-     state: drained
+- name: 等待服务停止
+  wait_for:
+    host: 0.0.0.0
+    port: "{{ server_port }}"
+    delay: 10
+    state: drained
 
 - name: 删除符号链接
   file:
