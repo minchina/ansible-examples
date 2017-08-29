@@ -1,6 +1,8 @@
 ---
 - name: 停止服务
-  command: service "{{ jar_name }}" stop
+  service:
+    name: "{{ jar_name }}"
+    state: started
 
 - name: 等待服务停止
   wait_for:
@@ -33,7 +35,9 @@
     group: root
     state: link
 - name: 重新启动服务
-  command: service "{{ jar_name }}" start
+  service:
+    name: "{{ jar_name }}"
+    state: stopped
 
 - name: 等待服务重新启动
   wait_for: port="{{ server_port }}"
