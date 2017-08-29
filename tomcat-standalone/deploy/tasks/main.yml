@@ -12,7 +12,7 @@
   service:
     name: "{{ jar_name }}"
     state: stopped
-  when: application_status.stdout.find("started") != -1
+  when: application_status.stdout.find("Running") != -1
 
 - name: 等待服务停止
   wait_for:
@@ -20,7 +20,7 @@
     port: "{{ server_port }}"
     delay: 10
     state: drained
-  when: application_status.stdout.find("started") != -1
+  when: application_status.stdout.find("Running") != -1
 
 - name: 删除符号链接
   file:
