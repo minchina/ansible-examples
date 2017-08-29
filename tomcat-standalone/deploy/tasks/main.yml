@@ -10,7 +10,7 @@
   service:
     name: "{{ jar_name }}"
     state: stopped
-  when: application_status != "Not running"
+  when: application_status|started
 
 - name: 等待服务停止
   wait_for:
@@ -18,7 +18,7 @@
     port: "{{ server_port }}"
     delay: 10
     state: drained
-  when: application_status != "Not running"
+  when: application_status|started
 
 - name: 删除符号链接
   file:
