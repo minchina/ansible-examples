@@ -4,9 +4,9 @@
 - hosts: tomcat-servers
   remote_user: root
   vars:
-    jar_path: /home/project/member-cilent-1.0-SNAPSHOT-exec.jar
+    path: /home/project/
+    jar_name: member-cilent-1.0-SNAPSHOT-exec.jar
     jar_url: http://192.168.21.23:8081/job/cn.sisyphe/job/member_client/ws/member-client/target/member-cilent-1.0-SNAPSHOT-exec.jar
-    script_name: start_member_services.py
     server_port: 18001
 
   roles:
