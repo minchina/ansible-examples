@@ -32,8 +32,6 @@
     state: absent
     path: "{{ path }}{{ jar_name }}"
 
-- debug: var="{{ jar_url }}"
-
 - name: 下载最新的JAR包
   get_url:
      url: "{{ jar_url }}"
