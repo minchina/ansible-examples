@@ -4,7 +4,7 @@
 - hosts: tomcat-servers
   remote_user: root
   vars:
-    path: /home/project
+    path: /home/project/
     jar_name: askcard-client-api-1.0-SNAPSHOT-exec.jar
     jar_url: http://192.168.21.23:8081/view/ask-ci/job/cn.sisyphe/job/ask-build/ws/askcard-client-api/target/askcard-client-api-1.0-SNAPSHOT-exec.jar
     server_port: 13001
