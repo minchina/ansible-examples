@@ -9,7 +9,7 @@
 - name: 停止服务
   service:
     name: "{{ jar_name }}"
-    state: started
+    state: stopped
   when: application_status != "Not running"
 
 - name: 等待服务停止
@@ -43,11 +43,12 @@
     owner: root
     group: root
     state: link
-#- name: 重新启动服务
-#  service:
-#    name: "{{ jar_name }}"
-#    state: stopped
-#
-#- name: 等待服务重新启动
-#  wait_for: port="{{ server_port }}"
+
+- name: 重新启动服务
+  service:
+    name: "{{ jar_name }}"
+    state: started
+
+- name: 等待服务重新启动
+  wait_for: port="{{ server_port }}"
 
