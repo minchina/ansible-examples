@@ -1,8 +1,16 @@
 ---
+
+- name: 检查服务运行状态
+  command: service "{{ jar_name }}" status
+  ignore_errors: yes
+  changed_when: false
+  register: application_status
+
 - name: 停止服务
   service:
     name: "{{ jar_name }}"
     state: started
+  when: application_status != "Not running"
 
 - name: 等待服务停止
   wait_for:
@@ -10,6 +18,7 @@
     port: "{{ server_port }}"
     delay: 10
     state: drained
+  when: application_status != "Not running"
 
 - name: 删除符号链接
   file:
@@ -25,7 +34,7 @@
   get_url:
      url: "{{ jar_url }}"
      dest: "{{ path }}"
-     mode: 0755
+     mode: u+x
 
 - name: 重新创建新的连接
   file:
@@ -34,11 +43,11 @@
     owner: root
     group: root
     state: link
-- name: 重新启动服务
-  service:
-    name: "{{ jar_name }}"
-    state: stopped
-
-- name: 等待服务重新启动
-  wait_for: port="{{ server_port }}"
+#- name: 重新启动服务
+#  service:
+#    name: "{{ jar_name }}"
+#    state: stopped
+#
+#- name: 等待服务重新启动
+#  wait_for: port="{{ server_port }}"
 
