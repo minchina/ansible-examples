@@ -1,28 +1,41 @@
 ---
-- name: remove the target file
+
+- name: 检查服务运行状态
+  command: netstat -tunlp | grep ":{{ server_port }}" | sed -e 's/.*\///'
+  ignore_errors: yes
+  changed_when: false
+  register: application_status
+
+- debug: var=application_status.stdout
+
+- name: 停止服务
+  command: python "{{ script_name }}" stop
+  args:
+    chdir: /home/project/
+  when: application_status.stdout == "java"
+
+- name: 等待服务停止
+  wait_for:
+    host: 0.0.0.0
+    port: "{{ server_port }}"
+    delay: 10
+    state: drained
+  when: application_status.stdout == "java"
+
+- name: 删除已经存在的JAR包
   file:
     state: absent
     path: "{{ jar_path }}"
 
-- name: kill the process
-  command: python "{{ script_name }}" stop
-  args:
-    chdir: /home/project/
-
-- name: Download security jar file
+- name: 下载新的JAR包
   get_url:
      url: "{{ jar_url }}"
      dest: /home/project
 
-- name: wait 20 seconds
-  pause:
-    seconds: 20
-
-- name: start server again
+- name: 重新启动服务
   command: python "{{ script_name }}" start
   args:
     chdir: /home/project/
 
-- name: wait for server to start
+- name: 等待服务重新启动
   wait_for: port="{{ server_port }}"
-
