@@ -1,9 +1,0 @@
----
-- name: remove the target file
-  file:
-    state: absent
-    path: /home/xxfdeploy/common-1.1.jar
-- name: Download commone jar file
-  get_url: 
-     url: http://192.168.21.23:8081/view/security-ci/job/cn.sisyphe/job/common-build/lastSuccessfulBuild/artifact/target/common-1.1.jar
-     dest: /home/xxfdeploy
